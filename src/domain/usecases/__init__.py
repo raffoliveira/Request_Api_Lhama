@@ -1,0 +1,1 @@
+from src.domain.usecases.starships_list_collector import StarshipsListCollectorInterface
