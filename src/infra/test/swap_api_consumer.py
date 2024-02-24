@@ -1,7 +1,10 @@
+from typing import Any
 from collections import namedtuple
 from faker import Faker
 
 fake = Faker()
+GetStarshipsResponse = namedtuple('GetStarshipsResponse', 'status_code request response')
+GetStarshipInformationResponse = namedtuple('GetStarshipInformationResponse', 'status_code request response')
 
 
 def mock_starships():
@@ -24,13 +27,24 @@ class SwapiApiConsumerSpy:
     ''' Spy for SwapiApiConsumer '''
 
     def __init__(self) -> None:
-        self.get_starships_response = namedtuple('get_starships_response', 'status_code request response')
         self.get_starships_attributes: dict = {}
+        self.get_starship_information_attributes: dict = {}
 
-    def get_starships(self, page: int) -> any:
+    def get_starships(self, page: int) -> Any:
         ''' mock to get_starships '''
 
         self.get_starships_attributes["page"] = page
-        return self.get_starships_response(status_code=200, request=None,
-                                           response={"results": [mock_starships(), mock_starships()]}
-                                           )
+        return GetStarshipsResponse(status_code=200,
+                                    request=None,
+                                    response={"results": [mock_starships(), mock_starships()]}
+                                    )
+
+    def get_starship_information(self, starship_id: int) -> Any:
+        ''' mock to get_starship_information '''
+
+        self.get_starship_information_attributes["starship_id"] = starship_id
+        return GetStarshipInformationResponse(
+            status_code=200,
+            request=None,
+            response=mock_starships()
+        )

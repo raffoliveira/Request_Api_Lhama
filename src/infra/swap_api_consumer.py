@@ -6,7 +6,8 @@ from requests import PreparedRequest
 from src.errors import HttpRequestError
 from src.data.interfaces.swap_api_consumer import SwapiApiConsumerInterface
 
-GetStartshipsResponse = namedtuple("GetStartshipsResponse", "status_code request response")
+GetStarshipsResponse = namedtuple("GetStarshipsResponse", "status_code request response")
+GetStarshipsInformationResponse = namedtuple("GetStarshipsInformationResponse", "status_code request response")
 
 
 class SwapiApiConsumer(SwapiApiConsumerInterface):
@@ -32,7 +33,34 @@ class SwapiApiConsumer(SwapiApiConsumerInterface):
         response = self.__send_http_request(req_prepared=req_prepared)
 
         if response.status_code >= 200 and response.status_code <= 299:
-            return GetStartshipsResponse(status_code=response.status_code, request=req, response=response.json())
+            return GetStarshipsResponse(status_code=response.status_code, request=req, response=response.json())
+
+        raise HttpRequestError(message=response.json()["detail"], status_code=response.status_code)
+
+    def get_starship_information(self, starship_id: int) -> Tuple[int, Type[PreparedRequest], Dict]:
+        """Method to get info starship
+
+        Args:
+            starship_id (int): number of starship_id
+
+        Returns:
+            Any: Data of response
+        """
+
+        req = requests.Request(
+            method="GET",
+            url=f"https://swapi.dev/api/starships/{starship_id}"
+        )
+        req_prepared = req.prepare()
+
+        response = self.__send_http_request(req_prepared=req_prepared)
+
+        if response.status_code >= 200 and response.status_code <= 299:
+            return GetStarshipsInformationResponse(
+                status_code=response.status_code,
+                request=req,
+                response=response.json()
+            )
 
         raise HttpRequestError(message=response.json()["detail"], status_code=response.status_code)
 

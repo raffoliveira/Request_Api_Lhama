@@ -11,3 +11,8 @@ class SwapiApiConsumerInterface(ABC):
     def get_starships(self, page: int) -> Tuple[int, Type[PreparedRequest], Dict]:
         """Must implement"""
         raise NotImplementedError("Must implement get_startships method")
+
+    @abstractmethod
+    def get_starship_information(self, starship_id: int) -> Tuple[int, Type[PreparedRequest], Dict]:
+        """Must implement"""
+        raise NotImplementedError("Must implement gget_starship_information method")

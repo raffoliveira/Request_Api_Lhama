@@ -1,1 +1,2 @@
 from src.main.composers.get_starships_in_pagination_composer import get_starships_in_pagination_composer
+from src.main.composers.get_starship_information_composer import get_starship_information_composer
