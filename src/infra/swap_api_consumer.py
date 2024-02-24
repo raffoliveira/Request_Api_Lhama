@@ -12,7 +12,7 @@ GetStartshipsResponse = namedtuple("GetStartshipsResponse", "status_code request
 class SwapiApiConsumer(SwapiApiConsumerInterface):
     """Classe da SwapiApi"""
 
-    def get_startships(self, page: int) -> Tuple[int, Type[PreparedRequest], Dict]:
+    def get_starships(self, page: int) -> Tuple[int, Type[PreparedRequest], Dict]:
         """Method to get starships
 
         Args:

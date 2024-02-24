@@ -9,7 +9,7 @@ def test_get_starships(requests_mock):
     page = 1
 
     requests_mock.get('https://swapi.dev/api/starships/', status_code=200, json={'some': 'thing', "results": [{}]})
-    get_starships_response = swapi_api_consumer.get_startships(page=page)
+    get_starships_response = swapi_api_consumer.get_starships(page=page)
 
     assert get_starships_response.request.method == 'GET'
     assert get_starships_response.request.url == 'https://swapi.dev/api/starships/'
@@ -28,7 +28,7 @@ def test_get_starships_http_error(requests_mock):
     requests_mock.get('https://swapi.dev/api/starships/', status_code=404, json={'detail': 'something'})
 
     try:
-        _ = swapi_api.get_startships(page=page)
+        _ = swapi_api.get_starships(page=page)
         assert True is False
     except HttpRequestError as err:
         assert err.message is not None

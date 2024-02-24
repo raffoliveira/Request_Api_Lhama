@@ -1,4 +1,4 @@
-from typing import Dict, List, Type
+from typing import Dict, List
 
 from src.domain.usecases import StarshipsListCollectorInterface
 from src.data.interfaces.swap_api_consumer import SwapiApiConsumerInterface
@@ -7,10 +7,18 @@ from src.data.interfaces.swap_api_consumer import SwapiApiConsumerInterface
 class StarshipsListCollector(StarshipsListCollectorInterface):
     """StarshipsListCollector """
 
-    def __init__(self, api_consumer: Type[SwapiApiConsumerInterface]) -> None:
+    def __init__(self, api_consumer: SwapiApiConsumerInterface) -> None:
         self.__api_consumer = api_consumer
 
     def list(self, page: int) -> List[Dict]:
+        """list pages
+
+        Args:
+            page (int): number of page to be list
+
+        Returns:
+            List[Dict]: collected page
+        """
         api_response = self.__api_consumer.get_starships(page)
         starships_formated_list = self.__format_api_response(api_response.response["results"])
         return starships_formated_list
